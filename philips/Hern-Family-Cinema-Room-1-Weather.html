@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hern Family Cinema Room 1</title>
+<style>
+:root{
+  --bg:#07111b; --panel:rgba(7,13,20,.50); --panel-strong:rgba(6,10,16,.68); --line:rgba(255,224,180,.25);
+  --text:#f6f3ec; --muted:rgba(246,243,236,.76); --accent:#f2d3a0; --accent2:#5cd4ff; --chip:rgba(255,255,255,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#02070d;color:var(--text);font-family:Inter,Segoe UI,system-ui,-apple-system,sans-serif;overflow:hidden}
+body.showcase .overlay{opacity:0;transform:translateY(20px);pointer-events:none}
+body.showcase .hintbar{opacity:0;pointer-events:none}
+body.showcase .showcase-pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.18)}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;background:#05101a}
+.vignette,.glow,.grain{position:fixed;inset:0;pointer-events:none}
+.vignette{background:radial-gradient(120% 90% at 72% 46%, transparent 0%, rgba(0,0,0,.12) 40%, rgba(0,0,0,.42) 100%),linear-gradient(90deg, rgba(2,6,12,.84) 0%, rgba(2,6,12,.38) 34%, rgba(2,6,12,.14) 60%, rgba(2,6,12,.42) 100%)}
+.glow{mix-blend-mode:screen;opacity:.72;background:radial-gradient(55rem 28rem at 74% 36%, rgba(94,224,255,.22), transparent 60%),radial-gradient(46rem 24rem at 72% 66%, rgba(255,170,70,.12), transparent 62%)}
+.grain{opacity:.065;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" stitchTiles="stitch"/></filter><rect width="140" height="140" filter="url(%23n)" opacity="1"/></svg>')}
+.shell{position:relative;height:100%;display:flex;align-items:stretch;justify-content:space-between;padding:2.1vw 2.1vw 1.6vw 2.1vw}
+.overlay{width:min(38.5vw,760px);display:flex;flex-direction:column;gap:1.1vw;transition:all .35s ease}
+.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.brand h1{margin:0;color:var(--accent);font-size:2.2vw;letter-spacing:.32vw;font-weight:700}
+.brand .sub{margin-top:.25vw;font-size:1.08vw;letter-spacing:.23vw;color:var(--muted);text-transform:uppercase}
+.clock{padding-top:.1vw;text-align:right}
+.clock .time{font-size:3.2vw;font-weight:300;letter-spacing:.06vw}
+.clock .date{font-size:1.1vw;color:var(--muted)}
+.hero{margin-top:3.2vw}
+.eyebrow{font-size:1vw;letter-spacing:.32vw;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h2{margin:.65vw 0 0 0;font-family:Georgia,'Times New Roman',serif;font-size:5.15vw;line-height:.92;max-width:10ch;font-weight:600}
+.hero h2 em{font-style:italic;color:var(--accent)}
+.hero p{margin:1.3vw 0 0 0;max-width:28ch;font-size:1.55vw;line-height:1.38;color:var(--muted)}
+.panel{margin-top:auto;background:linear-gradient(180deg, rgba(8,14,22,.42), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:1.35vw;box-shadow:0 1.4vw 3vw rgba(0,0,0,.28)}
+.section-title{font-size:1.02vw;letter-spacing:.32vw;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:.8vw}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:.78vw}
+.mode-btn,.control-btn,.app{border-radius:1.25vw;border:1px solid rgba(255,255,255,.14);background:var(--chip);color:#fff;text-decoration:none}
+.mode-btn,.control-btn{padding:1.05vw 1.1vw;display:flex;justify-content:space-between;align-items:center;gap:.8rem;font-size:1.2vw;cursor:pointer}
+.mode-btn small,.control-btn small{display:block;color:rgba(255,255,255,.55);font-size:.8vw;letter-spacing:.05vw}
+.mode-btn.active,.control-btn.active{border-color:rgba(255,226,179,.82);box-shadow:0 0 0 .16vw rgba(255,218,160,.18), inset 0 0 0 .1vw rgba(255,216,154,.22)}
+.control-row{display:grid;grid-template-columns:1fr 1fr;gap:.78vw;margin-top:.78vw}
+.rightside{width:min(35vw,680px);display:flex;align-items:flex-end;justify-content:flex-end}
+.feature-card{width:100%;max-width:33vw;align-self:center;padding:1.65vw;border-radius:1.8vw;background:linear-gradient(180deg, rgba(8,15,22,.10), rgba(8,15,22,.24));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(4px)}
+.feature-card .kicker{font-size:1vw;letter-spacing:.28vw;text-transform:uppercase;color:rgba(255,255,255,.76)}
+.feature-card h3{margin:.55vw 0 .45vw;font-size:2.9vw;line-height:1;font-weight:400;font-family:Georgia,serif}
+.feature-card p{margin:0;color:rgba(255,255,255,.75);font-size:1.2vw;line-height:1.45;max-width:28ch}
+.hintbar{position:fixed;left:2.1vw;right:2.1vw;bottom:1.4vw;display:flex;align-items:flex-end;justify-content:space-between;gap:1.2vw;transition:opacity .25s ease}
+.apps-wrap{flex:1;min-width:0;background:linear-gradient(180deg, rgba(8,14,22,.42), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:1.05vw 1.15vw}
+.apps{display:grid;grid-template-columns:repeat(6,1fr);gap:.72vw;margin-top:.78vw}
+.app{padding:1.05vw .75vw;min-height:6.9vw;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));box-shadow:inset 0 .05vw 0 rgba(255,255,255,.07)}
+.app strong{font-size:1.28vw}
+.app span{margin-top:.35vw;color:rgba(255,255,255,.58);font-size:.8vw}
+.app.netflix strong{color:#ff5c57}.app.youtube strong{color:#fff}.app.prime strong{color:#bfe9ff}.app.disney strong{color:#dae3ff}.app.freely strong{color:#ff7f9f}.app.tv strong{color:#efe1b0}
+.showcase-box{width:15.2vw;background:linear-gradient(180deg, rgba(8,14,22,.42), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:1.05vw}
+.showcase-pill{width:100%;padding:1.05vw 1.15vw;border-radius:1.2vw;border:1px solid rgba(255,255,255,.18);background:rgba(255,229,186,.14);color:#ffe2b6;font-size:1.12vw;text-align:left;cursor:pointer}
+.showcase-box p{margin:.75vw 0 0;font-size:.88vw;line-height:1.35;color:rgba(255,255,255,.62)}
+.mini{position:fixed;left:2vw;top:1.6vw;font-size:.95vw;letter-spacing:.16vw;color:rgba(255,255,255,.64);opacity:0;transition:opacity .25s ease;text-transform:uppercase;pointer-events:none}
+body.showcase .mini{opacity:1}
+button{font:inherit}
+@media (max-aspect-ratio: 14/9){ .rightside{display:none}.overlay{width:min(51vw,760px)} .apps{grid-template-columns:repeat(3,1fr)} .showcase-box{display:none} .hintbar{right:auto;width:calc(100% - 4.2vw)} }
+
+.weather-card{position:absolute;top:2.1vw;right:2.1vw;width:17.5vw;padding:1.05vw 1.2vw;border-radius:1.25vw;background:linear-gradient(125deg,rgba(7,22,32,.68),rgba(13,42,53,.46));border:1px solid rgba(235,215,182,.27);box-shadow:0 10px 35px rgba(0,0,0,.14);backdrop-filter:blur(5px);transition:opacity .35s ease;z-index:2}
+.weather-top{display:flex;justify-content:space-between;align-items:center;color:#f2d3a0;font-size:.8vw;letter-spacing:.12vw;text-transform:uppercase}
+.weather-main{display:flex;align-items:center;justify-content:space-between;margin:.5vw 0 .3vw}
+.weather-temp{font-size:3vw;font-weight:300;line-height:1}
+.weather-symbol{font-size:2.15vw;color:#f2d3a0}
+.weather-desc{font-size:1vw;color:#f6f3ec}
+.weather-detail{font-size:.82vw;line-height:1.45;color:rgba(246,243,236,.7);margin-top:.35vw}
+.weather-credit{font-size:.64vw;color:rgba(246,243,236,.45);margin-top:.45vw}
+body.showcase .weather-card{opacity:0;pointer-events:none}
+.exit-showcase{display:none;position:fixed;bottom:2vw;right:2vw;z-index:10;padding:1vw 1.5vw;font-size:1.15vw;border-radius:1.2vw;background:rgba(7,15,22,.75);border:1px solid rgba(255,229,183,.55);color:#f2d3a0;cursor:pointer}
+body.showcase .exit-showcase{display:block}
+@media(max-aspect-ratio:14/9){.weather-card{width:24vw}.weather-top{font-size:1vw}.weather-temp{font-size:4vw}.weather-desc{font-size:1.35vw}.weather-detail{font-size:1.1vw}}
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div class="vignette"></div><div class="glow"></div><div class="grain"></div>
+<div class="mini">Hern Family Cinema Room 1 · Showcase</div>
+<div class="shell">
+  <div class="overlay">
+    <div class="topline">
+      <div class="brand">
+        <h1>HERN FAMILY</h1>
+        <div class="sub">Cinema Room 1 · Ambilight Edition</div>
+      </div>
+      <div class="clock"><div class="time" id="time">14:27</div><div class="date" id="date">Wednesday 21 October</div></div>
+    </div>
+    <div class="hero">
+      <div class="eyebrow" id="eyebrow">01 / Ocean Immersion</div>
+      <h2 id="headline">Escape into <em>the blue.</em></h2>
+      <p id="strap">A private window into a quieter world, designed to flatter your Philips Ambilight.</p>
+    </div>
+    <div class="panel">
+      <div class="section-title">Ambient Scenes</div>
+      <div class="mode-grid">
+        <button class="mode-btn active" data-mode="ocean"><div><div>Ocean Immersion</div><small>Blue ambience / room glow</small></div><div>01</div></button>
+        <button class="mode-btn" data-mode="aquarium"><div><div>Aquarium Sanctuary</div><small>Colourful reef / gentle drift</small></div><div>02</div></button>
+        <button class="mode-btn" data-mode="fire"><div><div>Fireside Retreat</div><small>Warm ember / evening mood</small></div><div>03</div></button>
+        <button class="mode-btn" data-mode="cinema"><div><div>Cinema Royale</div><small>Gold luxe / midnight drama</small></div><div>04</div></button>
+      </div>
+      <div class="control-row">
+        <button class="control-btn" id="showcaseBtn"><div><div>Showcase Mode</div><small>Hide controls for full ambience</small></div><div>⤢</div></button>
+        <button class="control-btn active" id="motionBtn"><div><div>Motion On</div><small>Switch off if browser slows down</small></div><div>◐</div></button>
+      </div>
+    </div>
+  </div>
+<div class="weather-card overlay" aria-label="Pontypool weather">
+  <div class="weather-top"><span>Pontypool</span><span>Outside</span></div>
+  <div class="weather-main"><span class="weather-temp" id="weather-temp">--°C</span><span class="weather-symbol" id="weather-symbol">◌</span></div>
+  <div class="weather-desc" id="weather-desc">Loading weather…</div>
+  <div class="weather-detail" id="weather-detail">Local conditions and forecast</div>
+  <div class="weather-credit">Weather data: Open-Meteo</div>
+</div>
+  <div class="rightside">
+    <div class="feature-card">
+      <div class="kicker">Best used with picture-reactive Ambilight</div>
+      <h3 id="featureTitle">Ocean glow.</h3>
+      <p id="featureText">Let the TV become a calming feature wall, with deep sapphire tones, drifting particles and a slower, more cinematic pace.</p>
+    </div>
+  </div>
+</div>
+<button class="exit-showcase" id="exitShowcase">Exit Showcase</button>
+<div class="hintbar">
+  <div class="apps-wrap">
+    <div class="section-title" style="margin-bottom:0">Your Entertainment</div>
+    <div style="color:rgba(255,255,255,.70);font-size:.96vw;margin-top:.3vw">Use the dedicated buttons on your Philips remote for the fastest access.</div>
+    <div class="apps">
+      <div class="app netflix"><strong>NETFLIX</strong><span>Netflix button</span></div>
+      <div class="app prime"><strong>prime video</strong><span>Prime Video button</span></div>
+      <div class="app disney"><strong>Disney+</strong><span>Disney+ button</span></div>
+      <div class="app youtube"><strong>YouTube</strong><span>YouTube button</span></div>
+      <div class="app freely"><strong>Freely</strong><span>Freely button</span></div>
+      <div class="app tv"><strong>TV Channels</strong><span>TV Channels button</span></div>
+    </div>
+  </div>
+  <div class="showcase-box">
+    <button class="showcase-pill" id="showcaseBtn2">Enter Showcase</button>
+    <p>Press OK with the cursor over this button to hide the interface and let the scene fill the room.</p>
+  </div>
+</div>
+<script>
+const MODES = {
+  ocean:{id:'ocean', num:'01', name:'Ocean Immersion', headline:'Escape into <em>the blue.</em>', strap:'A private window into a quieter world, designed to flatter your Philips Ambilight.', featureTitle:'Ocean glow.', featureText:'Let the TV become a calming feature wall, with deep sapphire tones, drifting particles and a slower, more cinematic pace.', colors:['#03121d','#0a3551','#2bc6f5','#9cecff'], type:'ocean'},
+  aquarium:{id:'aquarium', num:'02', name:'Aquarium Sanctuary', headline:'Bring the <em>reef</em> home.', strap:'A richer scene with more colour, softer movement and a brighter ambient presence.', featureTitle:'Aquatic colour.', featureText:'Ideal when you want the TV to feel decorative, lively and room-filling rather than purely cinematic.', colors:['#041522','#07586b','#0bcfb8','#ffd96c'], type:'aquarium'},
+  fire:{id:'fire', num:'03', name:'Fireside Retreat', headline:'Stay for the <em>warmth.</em>', strap:'Soft amber firelight and a private retreat from the world.', featureTitle:'Evening warmth.', featureText:'A gentler night-time mode with darker edges, ember tones and an inviting centre glow.', colors:['#12090a','#4d0f0c','#c74419','#ffbb58'], type:'fire'},
+  cinema:{id:'cinema', num:'04', name:'Cinema Royale', headline:'Private screening, <em>elevated.</em>', strap:'Dark velvet tones, golden light and a boutique-cinema atmosphere.', featureTitle:'Boutique cinema.', featureText:'For a premium lounge feel: a little drama, a little glamour and a much cleaner visual finish.', colors:['#090712','#1d1034','#8a5fe4','#ffd59a'], type:'cinema'}
+};
+let current='ocean', motion=true, showcase=false;
+const canvas=document.getElementById('scene'), ctx=canvas.getContext('2d');
+let w=0,h=0,dpr=Math.min(devicePixelRatio||1,1.5), fishes=[], bubbles=[], embers=[], rays=[];
+function size(){ w=innerWidth; h=innerHeight; canvas.width=w*dpr; canvas.height=h*dpr; canvas.style.width=w+'px'; canvas.style.height=h+'px'; ctx.setTransform(dpr,0,0,dpr,0,0); seed(); }
+addEventListener('resize', size);
+function rand(a,b){return a+Math.random()*(b-a)}
+function seed(){ fishes=[]; bubbles=[]; embers=[]; rays=[];
+  for(let i=0;i<30;i++) bubbles.push({x:rand(0,w),y:rand(0,h),r:rand(1.5,5),s:rand(.15,.55),o:rand(.12,.6)});
+  for(let i=0;i<16;i++) rays.push({x:rand(w*.45,w*1.1),a:rand(.035,.12),sw:rand(120,260),o:rand(.05,.18)});
+  for(let i=0;i<12;i++) fishes.push({x:rand(-300,w+300),y:rand(h*.24,h*.78),s:rand(.45,1.2),v:rand(.2,.55),c:i%3});
+  for(let i=0;i<42;i++) embers.push({x:rand(0,w),y:rand(h*.55,h),r:rand(1,3.4),vx:rand(-.12,.12),vy:rand(-.7,-.18),o:rand(.08,.42)});
+}
+function updateClock(){ const n=new Date(); const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']; const months=['January','February','March','April','May','June','July','August','September','October','November','December']; const hh=String(n.getHours()).padStart(2,'0'); const mm=String(n.getMinutes()).padStart(2,'0'); document.getElementById('time').textContent=`${hh}:${mm}`; document.getElementById('date').textContent=`${days[n.getDay()]} ${n.getDate()} ${months[n.getMonth()]}`; }
+setInterval(updateClock,1000); updateClock();
+function paintBg(mode, t){ const c=MODES[mode].colors; ctx.clearRect(0,0,w,h);
+  let g=ctx.createLinearGradient(0,0,w,h); g.addColorStop(0,c[0]); g.addColorStop(.4,c[1]); g.addColorStop(.72,c[2]); g.addColorStop(1,c[1]); ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+  let g2=ctx.createRadialGradient(w*.75,h*.42,40,w*.75,h*.42,Math.max(w,h)*.55); g2.addColorStop(0, hexA(c[3], .55)); g2.addColorStop(.3, hexA(c[2], .22)); g2.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle=g2; ctx.fillRect(0,0,w,h);
+}
+function hexA(hex,a){ if(hex.startsWith('rgba')) return hex; const s=hex.replace('#',''); const n=parseInt(s,16); const r=(n>>16)&255,g=(n>>8)&255,b=n&255; return `rgba(${r},${g},${b},${a})`; }
+function drawOcean(){ ctx.save(); for(const ray of rays){ ctx.beginPath(); ctx.fillStyle=`rgba(180,245,255,${ray.o})`; ctx.moveTo(ray.x,0); ctx.lineTo(ray.x+ray.sw,0); ctx.lineTo(ray.x+ray.sw*0.3,h); ctx.lineTo(ray.x-ray.sw*0.16,h); ctx.closePath(); ctx.fill(); }
+ for(const b of bubbles){ ctx.beginPath(); ctx.fillStyle=`rgba(220,248,255,${b.o})`; ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill(); if(motion){ b.y-=b.s; if(b.y<-10){b.y=h+10;b.x=rand(0,w)} } }
+ ctx.restore(); }
+function fishShape(x,y,s,hue){ ctx.save(); ctx.translate(x,y); ctx.scale(s,s); ctx.fillStyle=hue; ctx.beginPath(); ctx.moveTo(-22,0); ctx.quadraticCurveTo(-4,-13,20,0); ctx.quadraticCurveTo(-4,13,-22,0); ctx.fill(); ctx.beginPath(); ctx.moveTo(-20,0); ctx.lineTo(-34,-10); ctx.lineTo(-34,10); ctx.closePath(); ctx.fill(); ctx.fillStyle='rgba(255,255,255,.55)'; ctx.beginPath(); ctx.arc(8,-2,1.8,0,Math.PI*2); ctx.fill(); ctx.restore(); }
+function drawAquarium(t){ drawOcean(); const hues=['rgba(255,214,86,.82)','rgba(47,238,215,.82)','rgba(255,133,161,.82)']; fishes.forEach((f,i)=>{ fishShape(f.x,f.y,f.s,hues[f.c]); if(motion){ f.x += f.v*(i%2?1:-1); if(f.x>w+60) f.x=-120; if(f.x<-120) f.x=w+60; f.y += Math.sin((t/800)+i)*.12; } });
+ ctx.fillStyle='rgba(15,48,54,.55)'; ctx.fillRect(0,h*.88,w,h*.12); for(let i=0;i<18;i++){ let x=i*(w/17); ctx.beginPath(); ctx.strokeStyle='rgba(67,149,121,.45)'; ctx.lineWidth=3; ctx.moveTo(x,h*.9); for(let j=0;j<5;j++) ctx.quadraticCurveTo(x+8+j*4,h*.82+j*14,x+(j%2?18:-10),h*.76+j*24); ctx.stroke(); } }
+function drawFire(t){ let grd=ctx.createRadialGradient(w*.70,h*.68,40,w*.70,h*.68,w*.42); grd.addColorStop(0,'rgba(255,190,90,.55)'); grd.addColorStop(.28,'rgba(220,76,28,.28)'); grd.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=grd; ctx.fillRect(0,0,w,h);
+ const baseY=h*.88; for(let i=0;i<5;i++){ const xo=w*.63+i*65; flame(xo,baseY,66+i*20,180+(i%2?34:-15), i*0.8+t/350); }
+ for(const e of embers){ ctx.beginPath(); ctx.fillStyle=`rgba(255,190,110,${e.o})`; ctx.arc(e.x,e.y,e.r,0,Math.PI*2); ctx.fill(); if(motion){ e.x += e.vx; e.y += e.vy; if(e.y<h*.42 || e.x<-10 || e.x>w+10){ e.x=rand(w*.45,w*.98); e.y=rand(h*.78,h*.96); } } }
+ }
+function flame(x,y,wf,hf,phase){ ctx.save(); ctx.translate(x,y); ctx.beginPath(); ctx.moveTo(0,0); for(let i=0;i<16;i++){ let p=i/15; let xx=Math.sin(p*Math.PI)*wf*(.18+Math.sin(phase+p*4)*.08)*(i<8?-1:1); let yy=-p*hf + Math.sin(phase+p*8)*5; ctx.lineTo(xx,yy);} ctx.closePath(); let lg=ctx.createLinearGradient(0,0,0,-hf); lg.addColorStop(0,'rgba(255,144,42,.82)'); lg.addColorStop(.5,'rgba(255,197,108,.72)'); lg.addColorStop(1,'rgba(255,244,205,.18)'); ctx.fillStyle=lg; ctx.fill(); ctx.restore(); }
+function drawCinema(t){ for(let i=0;i<9;i++){ const x=(i/8)*w; ctx.beginPath(); ctx.strokeStyle=`rgba(255,228,176,${0.04+(i%3)*0.03})`; ctx.lineWidth=48; ctx.moveTo(x-120,h); ctx.quadraticCurveTo(x+80,h*.56+Math.sin((t/1200)+i)*30,x-20,0); ctx.stroke(); }
+ for(let i=0;i<22;i++){ let x=(i/21)*w; let y=h*.2 + ((i%5)*h*.11); ctx.beginPath(); ctx.fillStyle='rgba(255,233,186,.06)'; ctx.arc(x,y,2.5+((i*7)%4),0,Math.PI*2); ctx.fill(); } }
+function tick(ts){ paintBg(current,ts); if(current==='ocean') drawOcean(); else if(current==='aquarium') drawAquarium(ts); else if(current==='fire') drawFire(ts); else drawCinema(ts); if(motion) requestAnimationFrame(tick); }
+function start(){ if(!motion){ paintBg(current,0); if(current==='ocean') drawOcean(); else if(current==='aquarium') drawAquarium(0); else if(current==='fire') drawFire(0); else drawCinema(0); return; } requestAnimationFrame(tick); }
+function applyMode(m){ current=m; const data=MODES[m]; document.getElementById('eyebrow').textContent=`${data.num} / ${data.name}`; document.getElementById('headline').innerHTML=data.headline; document.getElementById('strap').textContent=data.strap; document.getElementById('featureTitle').textContent=data.featureTitle; document.getElementById('featureText').textContent=data.featureText; document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active', b.dataset.mode===m)); seed(); start(); }
+document.querySelectorAll('.mode-btn').forEach(btn=>btn.onclick=()=>applyMode(btn.dataset.mode));
+function setMotion(on){ motion=on; document.getElementById('motionBtn').classList.toggle('active',on); document.getElementById('motionBtn').querySelector('div div').textContent=on?'Motion On':'Motion Off'; seed(); start(); }
+document.getElementById('motionBtn').onclick=()=>setMotion(!motion);
+function setShowcase(on){ showcase=on; document.body.classList.toggle('showcase',on); document.getElementById('showcaseBtn').classList.toggle('active',on); document.getElementById('showcaseBtn2').textContent=on?'Exit Showcase':'Enter Showcase'; }
+document.getElementById('showcaseBtn').onclick=()=>setShowcase(!showcase); document.getElementById('showcaseBtn2').onclick=()=>setShowcase(!showcase);
+document.getElementById('exitShowcase').onclick=()=>setShowcase(false);
+function weatherDescription(code){if(code===0)return ['Clear sky','☀']; if(code<=3)return ['Partly cloudy','☁'];if(code===45||code===48)return ['Fog','≋']; if(code>=51&&code<=57)return ['Drizzle','☂'];if(code>=61&&code<=67)return ['Rain','☂'];if(code>=71&&code<=77)return ['Snow','❄'];if(code>=80&&code<=82)return ['Showers','☂'];if(code>=95)return ['Thunderstorms','ϟ'];return ['Mixed conditions','☁'];}
+function weatherUnavailable(){document.getElementById('weather-temp').textContent='--°C';document.getElementById('weather-symbol').textContent='◌';document.getElementById('weather-desc').textContent='Weather unavailable';document.getElementById('weather-detail').textContent='Check the TV internet connection';}
+function fetchWeather(){
+ const url='https://api.open-meteo.com/v1/forecast?latitude=51.703&longitude=-3.045&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon&forecast_days=1';
+ const request=new XMLHttpRequest(); request.open('GET',url,true); request.timeout=10000;
+ request.onreadystatechange=function(){if(request.readyState!==4)return; if(request.status===200){try{const data=JSON.parse(request.responseText), c=data.current, d=data.daily;if(!c||typeof c.temperature_2m!=='number')throw new Error('No temperature');const desc=weatherDescription(c.weather_code);document.getElementById('weather-temp').textContent=Math.round(c.temperature_2m)+'°C';document.getElementById('weather-symbol').textContent=desc[1];document.getElementById('weather-desc').textContent=desc[0];const parts=[];if(typeof c.apparent_temperature==='number')parts.push('Feels '+Math.round(c.apparent_temperature)+'°');if(d&&d.temperature_2m_max&&d.temperature_2m_min)parts.push('High '+Math.round(d.temperature_2m_max[0])+'° / Low '+Math.round(d.temperature_2m_min[0])+'°');document.getElementById('weather-detail').textContent=parts.join(' · ');return;}catch(e){}}weatherUnavailable();};
+ request.onerror=weatherUnavailable;request.ontimeout=weatherUnavailable;try{request.send();}catch(e){weatherUnavailable();}
+}
+fetchWeather();setInterval(fetchWeather,900000);
+size(); applyMode('ocean'); setMotion(true);
+</script>
+</body>
+</html>
