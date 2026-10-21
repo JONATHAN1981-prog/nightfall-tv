@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hern Family Cinema Room 2</title>
+<style>
+:root{--bg:#041018;--panel:rgba(6,12,18,.58);--line:rgba(255,227,186,.22);--text:#f7f3ed;--muted:rgba(247,243,237,.77);--accent:#f2d5a4;--chip:rgba(255,255,255,.05)}
+*{box-sizing:border-box} html,body{margin:0;height:100%;overflow:hidden;background:#02070d;color:var(--text);font-family:Inter,Segoe UI,system-ui,-apple-system,sans-serif}
+body.showcase .overlay, body.showcase .bottom{opacity:0;transform:translateY(18px);pointer-events:none} body.showcase .mini{opacity:1}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;background:#04111a}
+.vignette,.glow,.grain{position:fixed;inset:0;pointer-events:none}.vignette{background:radial-gradient(120% 110% at 78% 44%, transparent 0%, rgba(0,0,0,.12) 36%, rgba(0,0,0,.50) 100%),linear-gradient(90deg, rgba(2,6,10,.88) 0%, rgba(2,6,10,.55) 34%, rgba(2,6,10,.18) 58%, rgba(2,6,10,.42) 100%)}.glow{mix-blend-mode:screen;opacity:.68;background:radial-gradient(52rem 30rem at 72% 40%, rgba(94,223,255,.22), transparent 60%),radial-gradient(40rem 24rem at 74% 66%, rgba(255,163,89,.12), transparent 64%)}.grain{opacity:.05;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" stitchTiles="stitch"/></filter><rect width="140" height="140" filter="url(%23n)" opacity="1"/></svg>')}
+.shell{position:relative;height:100%;padding:2.1vw 2.1vw 1.5vw 2.1vw;display:flex;flex-direction:column;justify-content:space-between}.overlay{display:grid;grid-template-columns:minmax(430px,38vw) 1fr;gap:2vw;transition:all .35s ease}.left{display:flex;flex-direction:column}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}.brand h1{margin:0;color:var(--accent);font-size:2.15vw;letter-spacing:.30vw;font-weight:700}.brand .sub{margin-top:.28vw;font-size:1.06vw;letter-spacing:.22vw;color:var(--muted);text-transform:uppercase}.clock{text-align:right}.clock .time{font-size:3.35vw;font-weight:300}.clock .date{font-size:1.08vw;color:var(--muted)}.hero{margin-top:3vw}.eyebrow{font-size:1vw;letter-spacing:.34vw;text-transform:uppercase;color:var(--accent);font-weight:700}.hero h2{margin:.65vw 0 0;font-family:Georgia,serif;font-size:5.4vw;line-height:.92;font-weight:600;max-width:9ch}.hero h2 em{font-style:italic;color:var(--accent)}.hero p{margin:1.25vw 0 0;max-width:26ch;color:var(--muted);font-size:1.48vw;line-height:1.38}.controls{margin-top:2vw;display:grid;grid-template-columns:1fr 1fr;gap:.8vw}.scene-btn,.toggle-btn,.shortcut,.showcase-pill{border-radius:1.25vw;border:1px solid rgba(255,255,255,.14);background:var(--chip);color:#fff}.scene-btn,.toggle-btn{padding:1.1vw 1.15vw;text-align:left;font-size:1.22vw;cursor:pointer}.scene-btn small,.toggle-btn small{display:block;color:rgba(255,255,255,.58);font-size:.8vw;margin-top:.25vw}.scene-btn.active,.toggle-btn.active{border-color:rgba(255,228,183,.82);box-shadow:0 0 0 .16vw rgba(255,218,160,.18), inset 0 0 0 .1vw rgba(255,216,154,.22)}.right{display:flex;align-items:center;justify-content:flex-end}.focus{width:min(31vw,560px);padding:1.7vw;border-radius:1.8vw;background:linear-gradient(180deg, rgba(8,14,22,.12), rgba(8,14,22,.22));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(4px)}.focus .kicker{font-size:1vw;letter-spacing:.28vw;color:rgba(255,255,255,.7);text-transform:uppercase}.focus h3{margin:.55vw 0 .45vw;font-size:3vw;line-height:1;font-weight:400;font-family:Georgia,serif}.focus p{margin:0;color:rgba(255,255,255,.75);font-size:1.18vw;line-height:1.42;max-width:26ch}.bottom{display:grid;grid-template-columns:1fr 14.6vw;gap:1vw;align-items:end;transition:all .3s ease}.panel{background:linear-gradient(180deg, rgba(8,14,22,.40), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:1.02vw 1.15vw}.section-title{font-size:1.02vw;letter-spacing:.32vw;text-transform:uppercase;color:var(--accent);font-weight:700}.desc{margin-top:.28vw;color:rgba(255,255,255,.70);font-size:.95vw}.shortcuts{display:grid;grid-template-columns:repeat(6,1fr);gap:.72vw;margin-top:.72vw}.shortcut{padding:1.02vw .8vw;min-height:6.85vw;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}.shortcut strong{font-size:1.25vw}.shortcut span{margin-top:.35vw;color:rgba(255,255,255,.55);font-size:.8vw}.n strong{color:#ff5b56}.y strong{color:#fff}.p strong{color:#bfe9ff}.d strong{color:#dae3ff}.f strong{color:#ffd59e}.t strong{color:#ff9aa1}.showbox{background:linear-gradient(180deg, rgba(8,14,22,.40), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:1.05vw}.showcase-pill{width:100%;padding:1.05vw 1.1vw;background:rgba(255,229,186,.14);color:#ffe2b6;font-size:1.1vw;cursor:pointer}.showbox p{margin:.75vw 0 0;font-size:.88vw;line-height:1.35;color:rgba(255,255,255,.62)}.mini{position:fixed;left:2vw;top:1.6vw;font-size:.95vw;letter-spacing:.16vw;color:rgba(255,255,255,.64);opacity:0;transition:opacity .25s ease;text-transform:uppercase;pointer-events:none}
+@media (max-aspect-ratio: 14/9){.overlay{grid-template-columns:1fr}.right{display:none}.shortcuts{grid-template-columns:repeat(3,1fr)}.bottom{grid-template-columns:1fr}.showbox{display:none}}
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas><div class="vignette"></div><div class="glow"></div><div class="grain"></div><div class="mini">Hern Family Cinema Room 2 · Showcase</div>
+<div class="shell">
+  <div class="overlay">
+    <div class="left">
+      <div class="top">
+        <div class="brand"><h1>HERN FAMILY</h1><div class="sub">Cinema Room 2 · Bedroom</div></div>
+        <div class="clock"><div class="time" id="time">14:27</div><div class="date" id="date">Wednesday 21 October</div></div>
+      </div>
+      <div class="hero">
+        <div class="eyebrow" id="eyebrow">01 / Ocean Luxe</div>
+        <h2 id="headline">Your private <em>escape.</em></h2>
+        <p id="strap">Dive into midnight blue, drifting light and quiet wonder — a slower, calmer scene for the bedroom.</p>
+      </div>
+      <div class="controls">
+        <button class="scene-btn active" data-mode="ocean"><div>Ocean Luxe</div><small>Deep blue / calming display</small></button>
+        <button class="scene-btn" data-mode="ember"><div>Ember Lounge</div><small>Warm amber / night-time cosy</small></button>
+        <button class="scene-btn" data-mode="cinema"><div>Cinema Noir</div><small>Velvet dark / boutique mood</small></button>
+        <button class="scene-btn" data-mode="midnight"><div>Midnight Reef</div><small>Gentle aquatic glow</small></button>
+        <button class="toggle-btn" id="showBtn"><div>Showcase Mode</div><small>Hide controls for maximum impact</small></button>
+        <button class="toggle-btn active" id="motionBtn"><div>Motion On</div><small>Disable if browser is slower</small></button>
+      </div>
+    </div>
+    <div class="right">
+      <div class="focus">
+        <div class="kicker">Best for winding down</div>
+        <h3 id="featureTitle">Midnight calm.</h3>
+        <p id="featureText">Room 2 should feel more restful than dramatic, with darker tones and softer movement that sit comfortably in a bedroom.</p>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="panel">
+      <div class="section-title">Your Entertainment</div>
+      <div class="desc">Use the matching shortcut on your Hisense remote for the fastest access.</div>
+      <div class="shortcuts">
+        <div class="shortcut n"><strong>NETFLIX</strong><span>Netflix button</span></div>
+        <div class="shortcut y"><strong>YouTube</strong><span>YouTube button</span></div>
+        <div class="shortcut p"><strong>prime video</strong><span>Prime Video button</span></div>
+        <div class="shortcut d"><strong>Disney+</strong><span>Disney+ button</span></div>
+        <div class="shortcut f"><strong>Freeview</strong><span>Freeview Play / TV</span></div>
+        <div class="shortcut t"><strong>TV Guide</strong><span>GUIDE button</span></div>
+      </div>
+    </div>
+    <div class="showbox"><button class="showcase-pill" id="showBtn2">Enter Showcase</button><p>Use this when you want the room ambience to take over and the controls to disappear.</p></div>
+  </div>
+</div>
+<script>
+const MODES={
+  ocean:{num:'01',name:'Ocean Luxe',headline:'Your private <em>escape.</em>',strap:'Dive into midnight blue, drifting light and quiet wonder — a slower, calmer scene for the bedroom.',featureTitle:'Midnight calm.',featureText:'Room 2 should feel more restful than dramatic, with darker tones and softer movement that sit comfortably in a bedroom.',colors:['#04111a','#0a3147','#1bb7d6','#9ceeff'],type:'ocean'},
+  ember:{num:'02',name:'Ember Lounge',headline:'Relax into <em>warmth.</em>',strap:'A darkened firelit mode with softer amber tones, ideal for a calm late-evening atmosphere.',featureTitle:'Warm retreat.',featureText:'This mode is more cocooning than bright — designed to make the room feel inviting without becoming visually busy.',colors:['#100809','#3d0d0b','#c1411a','#fbb65c'],type:'fire'},
+  cinema:{num:'03',name:'Cinema Noir',headline:'Boutique cinema, <em>softened.</em>',strap:'A premium, velvet-dark scene with a little gold glamour and minimal distraction.',featureTitle:'Private screening.',featureText:'When you want something elegant rather than decorative, this mode gives you a more luxurious, lounge-style finish.',colors:['#070712','#17122f','#7d59d8','#ffd59d'],type:'cinema'},
+  midnight:{num:'04',name:'Midnight Reef',headline:'A little <em>aquatic glow.</em>',strap:'An aquarium-inspired scene, kept darker and more subdued for the bedroom rather than the living room.',featureTitle:'Gentle colour.',featureText:'A compromise between calm and decorative — enough movement to feel alive, but still dark enough for a bedroom.',colors:['#05141d','#0b4c5a','#0cbaae','#8dffe4'],type:'reef'}
+};
+let current='ocean', motion=true, showcase=false; const canvas=document.getElementById('scene'), ctx=canvas.getContext('2d'); let w=0,h=0,dpr=Math.min(devicePixelRatio||1,1.5), bubbles=[], embers=[], dots=[];
+function rand(a,b){return a+Math.random()*(b-a)}; function hexA(hex,a){const s=hex.replace('#','');const n=parseInt(s,16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+function size(){w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);seed();} addEventListener('resize',size);
+function seed(){bubbles=[]; embers=[]; dots=[]; for(let i=0;i<34;i++) bubbles.push({x:rand(0,w),y:rand(0,h),r:rand(1.4,4.8),s:rand(.1,.42),o:rand(.08,.55)}); for(let i=0;i<42;i++) embers.push({x:rand(0,w),y:rand(h*.58,h),r:rand(1,3.4),vx:rand(-.1,.1),vy:rand(-.6,-.12),o:rand(.08,.42)}); for(let i=0;i<22;i++) dots.push({x:rand(0,w),y:rand(0,h*.82),r:rand(1,4),o:rand(.03,.12)}); }
+function updateClock(){ const n=new Date(); const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']; const months=['January','February','March','April','May','June','July','August','September','October','November','December']; document.getElementById('time').textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; document.getElementById('date').textContent=`${days[n.getDay()]} ${n.getDate()} ${months[n.getMonth()]}`; } setInterval(updateClock,1000); updateClock();
+function paintBg(mode){const c=MODES[mode].colors; ctx.clearRect(0,0,w,h); let g=ctx.createLinearGradient(0,0,w,h); g.addColorStop(0,c[0]); g.addColorStop(.42,c[1]); g.addColorStop(.74,c[2]); g.addColorStop(1,c[1]); ctx.fillStyle=g; ctx.fillRect(0,0,w,h); let rg=ctx.createRadialGradient(w*.72,h*.42,40,w*.72,h*.42,Math.max(w,h)*.58); rg.addColorStop(0,hexA(c[3],.5)); rg.addColorStop(.3,hexA(c[2],.2)); rg.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=rg; ctx.fillRect(0,0,w,h); }
+function drawOcean(){ for(const b of bubbles){ ctx.beginPath(); ctx.fillStyle=`rgba(220,248,255,${b.o})`; ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill(); if(motion){ b.y-=b.s; if(b.y<-10){b.y=h+10;b.x=rand(0,w)} } } for(let i=0;i<10;i++){ const x=w*.46 + i*90; ctx.beginPath(); ctx.strokeStyle='rgba(190,248,255,.06)'; ctx.lineWidth=48; ctx.moveTo(x,0); ctx.quadraticCurveTo(x+40,h*.38,x-20,h); ctx.stroke(); } }
+function drawFire(t){ for(let i=0;i<4;i++){ flame(w*.68+i*78,h*.88,74+i*18,190+(i%2?20:-20),t/360+i); } for(const e of embers){ ctx.beginPath(); ctx.fillStyle=`rgba(255,190,110,${e.o})`; ctx.arc(e.x,e.y,e.r,0,Math.PI*2); ctx.fill(); if(motion){ e.x+=e.vx; e.y+=e.vy; if(e.y<h*.45||e.x<-10||e.x>w+10){e.x=rand(w*.54,w*.96);e.y=rand(h*.78,h*.97);} } } }
+function flame(x,y,wf,hf,p){ ctx.save(); ctx.translate(x,y); ctx.beginPath(); ctx.moveTo(0,0); for(let i=0;i<16;i++){ const q=i/15; const xx=Math.sin(q*Math.PI)*wf*(.16+Math.sin(p+q*4)*.08)*(i<8?-1:1); const yy=-q*hf+Math.sin(p+q*6)*5; ctx.lineTo(xx,yy);} ctx.closePath(); let lg=ctx.createLinearGradient(0,0,0,-hf); lg.addColorStop(0,'rgba(255,143,40,.8)'); lg.addColorStop(.5,'rgba(255,198,109,.68)'); lg.addColorStop(1,'rgba(255,244,205,.15)'); ctx.fillStyle=lg; ctx.fill(); ctx.restore(); }
+function drawCinema(t){ for(let i=0;i<8;i++){ const x=(i/7)*w; ctx.beginPath(); ctx.strokeStyle=`rgba(255,224,170,${0.04+(i%2)*0.03})`; ctx.lineWidth=42; ctx.moveTo(x-120,h); ctx.quadraticCurveTo(x+90,h*.58+Math.sin((t/1100)+i)*28,x,0); ctx.stroke(); } dots.forEach(d=>{ ctx.beginPath(); ctx.fillStyle=`rgba(255,235,198,${d.o})`; ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fill(); }); }
+function drawReef(t){ drawOcean(); for(let i=0;i<12;i++){ let x=i*(w/11); ctx.beginPath(); ctx.strokeStyle='rgba(63,160,145,.35)'; ctx.lineWidth=3; ctx.moveTo(x,h*.93); for(let j=0;j<6;j++) ctx.quadraticCurveTo(x+6+j*4,h*.86+j*12,x+(j%2?16:-8),h*.80+j*20); ctx.stroke(); } for(let i=0;i<10;i++){ let fx=(i*131 + ((motion?t/22:0)%w))%w; let fy=h*.36 + (i%5)*54 + Math.sin((t/800)+i)*8; fish(fx,fy,.45+(i%3)*.18,['rgba(255,214,86,.74)','rgba(47,238,215,.74)','rgba(255,133,161,.74)'][i%3]); } }
+function fish(x,y,s,c){ ctx.save(); ctx.translate(x,y); ctx.scale(s,s); ctx.fillStyle=c; ctx.beginPath(); ctx.moveTo(-22,0); ctx.quadraticCurveTo(-4,-13,20,0); ctx.quadraticCurveTo(-4,13,-22,0); ctx.fill(); ctx.beginPath(); ctx.moveTo(-20,0); ctx.lineTo(-34,-10); ctx.lineTo(-34,10); ctx.closePath(); ctx.fill(); ctx.restore(); }
+function render(t){ paintBg(current); const type=MODES[current].type; if(type==='ocean') drawOcean(); else if(type==='fire') drawFire(t); else if(type==='cinema') drawCinema(t); else drawReef(t); }
+function loop(ts){ render(ts); if(motion) requestAnimationFrame(loop); }
+function applyMode(m){ current=m; const data=MODES[m]; document.getElementById('eyebrow').textContent=`${data.num} / ${data.name}`; document.getElementById('headline').innerHTML=data.headline; document.getElementById('strap').textContent=data.strap; document.getElementById('featureTitle').textContent=data.featureTitle; document.getElementById('featureText').textContent=data.featureText; document.querySelectorAll('.scene-btn').forEach(b=>b.classList.toggle('active', b.dataset.mode===m)); seed(); motion?requestAnimationFrame(loop):render(0); }
+document.querySelectorAll('.scene-btn').forEach(btn=>btn.onclick=()=>applyMode(btn.dataset.mode)); function setMotion(on){ motion=on; const b=document.getElementById('motionBtn'); b.classList.toggle('active',on); b.querySelector('div').textContent=on?'Motion On':'Motion Off'; seed(); on?requestAnimationFrame(loop):render(0);} document.getElementById('motionBtn').onclick=()=>setMotion(!motion); function setShow(on){ showcase=on; document.body.classList.toggle('showcase',on); document.getElementById('showBtn').classList.toggle('active',on); document.getElementById('showBtn2').textContent=on?'Exit Showcase':'Enter Showcase'; } document.getElementById('showBtn').onclick=()=>setShow(!showcase); document.getElementById('showBtn2').onclick=()=>setShow(!showcase); size(); applyMode('ocean'); setMotion(true);
+</script>
+</body>
+</html>
