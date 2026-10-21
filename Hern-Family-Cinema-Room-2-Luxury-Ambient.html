@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hern Family Cinema Room 2 — Luxury Ambient</title>
+<style>
+:root{
+  --text:#f7f4ef;
+  --muted:rgba(247,244,239,.78);
+  --accent:#f2d6a8;
+  --panel:rgba(8,12,18,.50);
+  --panel-strong:rgba(8,12,18,.68);
+  --line:rgba(255,223,181,.18);
+  --chip:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#04080f;color:var(--text);font-family:Inter,Segoe UI,system-ui,-apple-system,sans-serif}
+body.showcase .shell{opacity:0;transform:translateY(16px);pointer-events:none}
+body.showcase .mini, body.showcase .exit-showcase{opacity:1;pointer-events:auto}
+canvas#scene{position:fixed;inset:0;width:100%;height:100%;display:block}
+.overlay,.grain,.vignette,.glassglow{position:fixed;inset:0;pointer-events:none}
+.vignette{background:radial-gradient(120% 110% at 80% 46%, transparent 0%, rgba(0,0,0,.12) 40%, rgba(0,0,0,.52) 100%),linear-gradient(90deg, rgba(3,6,12,.88) 0%, rgba(3,6,12,.58) 34%, rgba(3,6,12,.20) 56%, rgba(3,6,12,.40) 100%)}
+.glassglow{mix-blend-mode:screen;opacity:.55;background:radial-gradient(42rem 22rem at 72% 24%, rgba(255,255,255,.08), transparent 65%),radial-gradient(36rem 22rem at 76% 68%, rgba(255,213,147,.10), transparent 66%)}
+.grain{opacity:.05;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.05" numOctaves="2" stitchTiles="stitch"/></filter><rect width="160" height="160" filter="url(%23n)"/></svg>')}
+.shell{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:minmax(420px,38vw) 1fr;gap:2vw;padding:2vw;transition:all .35s ease}
+.left{display:flex;flex-direction:column;gap:1.2vw}
+.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.brand h1{margin:0;color:var(--accent);font-size:2.15vw;letter-spacing:.28vw;font-weight:700}
+.brand .sub{margin-top:.25vw;font-size:1.02vw;letter-spacing:.22vw;color:var(--muted);text-transform:uppercase}
+.clock{text-align:right}
+.time{font-size:3.4vw;font-weight:300;line-height:1}
+.date{margin-top:.35vw;font-size:1.05vw;color:var(--muted)}
+.weather{margin-top:.7vw;background:linear-gradient(180deg, rgba(8,12,18,.36), rgba(8,12,18,.58));border:1px solid var(--line);backdrop-filter:blur(10px);border-radius:1.25vw;padding:.9vw 1vw;min-width:15vw;display:inline-flex;flex-direction:column;gap:.28vw;align-items:flex-end}
+.weather .label{font-size:.82vw;letter-spacing:.18vw;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.weather .temp{font-size:2.1vw;line-height:1;font-weight:500}
+.weather .cond,.weather .range{font-size:.86vw;color:rgba(255,255,255,.74)}
+.hero{margin-top:2.6vw}
+.eyebrow{font-size:1vw;letter-spacing:.34vw;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h2{margin:.65vw 0 0;font-family:Georgia,serif;font-size:5.2vw;line-height:.92;font-weight:600;max-width:9ch}
+.hero h2 em{font-style:italic;color:var(--accent)}
+.hero p{margin:1.1vw 0 0;max-width:27ch;font-size:1.42vw;line-height:1.42;color:var(--muted)}
+.control-panel{margin-top:auto;background:linear-gradient(180deg, rgba(8,12,18,.42), rgba(8,12,18,.72));border:1px solid var(--line);backdrop-filter:blur(11px);border-radius:1.65vw;padding:1.15vw;box-shadow:0 1.2vw 2.8vw rgba(0,0,0,.25)}
+.section-title{font-size:.98vw;letter-spacing:.3vw;text-transform:uppercase;color:var(--accent);font-weight:700}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:.72vw;margin-top:.8vw}
+.mode-btn,.action-btn,.nav-btn,.app-card,.showcase-card button,.exit-showcase{border-radius:1.2vw;border:1px solid rgba(255,255,255,.14);background:var(--chip);color:#fff}
+.mode-btn,.action-btn,.nav-btn{padding:1.02vw 1.05vw;text-align:left;cursor:pointer;font-size:1.15vw}
+.mode-btn small,.action-btn small,.nav-btn small{display:block;margin-top:.24vw;font-size:.78vw;color:rgba(255,255,255,.56)}
+.mode-btn.active,.action-btn.active{border-color:rgba(255,230,191,.82);box-shadow:0 0 0 .15vw rgba(255,221,175,.16), inset 0 0 0 .1vw rgba(255,214,145,.18)}
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:.72vw;margin-top:.72vw}
+.right{display:flex;align-items:flex-end;justify-content:flex-end}
+.feature{width:min(32vw,620px);background:linear-gradient(180deg, rgba(8,12,18,.14), rgba(8,12,18,.26));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(4px);border-radius:1.75vw;padding:1.5vw 1.55vw;margin-bottom:1.6vw}
+.feature .kicker{font-size:.94vw;letter-spacing:.26vw;text-transform:uppercase;color:rgba(255,255,255,.70)}
+.feature h3{margin:.52vw 0 .38vw;font-family:Georgia,serif;font-size:3vw;font-weight:400;line-height:1}
+.feature p{margin:0;max-width:28ch;font-size:1.14vw;line-height:1.44;color:rgba(255,255,255,.76)}
+.bottom-bar{position:fixed;left:2vw;right:2vw;bottom:1.35vw;display:grid;grid-template-columns:1fr 14.2vw;gap:1vw;z-index:3}
+.apps-panel,.showcase-card{background:linear-gradient(180deg, rgba(8,12,18,.42), rgba(8,12,18,.72));border:1px solid var(--line);backdrop-filter:blur(11px);border-radius:1.65vw;padding:1vw 1.1vw}
+.apps-panel .desc{margin-top:.3vw;font-size:.92vw;color:rgba(255,255,255,.68)}
+.apps{display:grid;grid-template-columns:repeat(6,1fr);gap:.7vw;margin-top:.75vw}
+.app-card{padding:.95vw .78vw;min-height:6.25vw;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
+.app-card strong{font-size:1.18vw;line-height:1.05}
+.app-card span{margin-top:.32vw;font-size:.78vw;color:rgba(255,255,255,.55)}
+.netflix strong{color:#ff5d58}.youtube strong{color:#fff}.prime strong{color:#c7edff}.disney strong{color:#e5ebff}.live strong{color:#ffdc9d}.guide strong{color:#ffb5c0}
+.showcase-card button{width:100%;padding:1vw 1.08vw;background:rgba(255,229,186,.14);color:#ffe3ba;cursor:pointer;font-size:1.06vw}
+.showcase-card p{margin:.72vw 0 0;font-size:.86vw;line-height:1.35;color:rgba(255,255,255,.62)}
+.mini{position:fixed;left:2vw;top:1.6vw;opacity:0;pointer-events:none;z-index:4;font-size:.95vw;letter-spacing:.16vw;text-transform:uppercase;color:rgba(255,255,255,.68);transition:opacity .25s ease}
+.exit-showcase{position:fixed;right:2vw;top:1.6vw;opacity:0;pointer-events:none;z-index:5;padding:.9vw 1.05vw;background:rgba(255,229,186,.14);color:#ffe3ba;cursor:pointer;transition:opacity .25s ease;font-size:.98vw}
+@media (max-aspect-ratio: 14/9){
+  .shell{grid-template-columns:1fr}.right{display:none}.apps{grid-template-columns:repeat(3,1fr)}.bottom-bar{grid-template-columns:1fr}.showcase-card{display:none}
+}
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div class="vignette"></div>
+<div class="glassglow"></div>
+<div class="grain"></div>
+<div class="mini">Hern Family Cinema Room 2 · Showcase</div>
+<button class="exit-showcase" id="exitShowcase">Exit Showcase</button>
+<div class="shell" id="shell">
+  <div class="left">
+    <div class="topline">
+      <div class="brand">
+        <h1>HERN FAMILY</h1>
+        <div class="sub">Cinema Room 2 · Ambient Home</div>
+      </div>
+      <div class="clock">
+        <div class="time" id="time">20:14</div>
+        <div class="date" id="date">Wednesday 21 October</div>
+        <div class="weather" id="weatherBox">
+          <div class="label">Pontypool Weather</div>
+          <div class="temp" id="weatherTemp">--°C</div>
+          <div class="cond" id="weatherCond">Loading weather…</div>
+          <div class="range" id="weatherRange">High --° / Low --° · Feels like --°</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="eyebrow" id="eyebrow">01 / Sapphire Drift</div>
+      <h2 id="headline">An ambient <em>escape.</em></h2>
+      <p id="strap">A calmer, more sophisticated display — rich colour, gentle motion and a smart-home atmosphere.</p>
+    </div>
+    <div class="control-panel">
+      <div class="section-title">Luxury Themes</div>
+      <div class="mode-grid">
+        <button class="mode-btn active" data-mode="sapphire"><div>Sapphire Drift</div><small>Deep blue / glassy calm</small></button>
+        <button class="mode-btn" data-mode="ember"><div>Ember Aura</div><small>Warm bronze / evening glow</small></button>
+        <button class="mode-btn" data-mode="noir"><div>Noir Gold</div><small>Velvet dark / premium cinema</small></button>
+        <button class="mode-btn" data-mode="aurora"><div>Aurora Glass</div><small>Layered teal / violet flow</small></button>
+      </div>
+      <div class="action-row">
+        <button class="action-btn" id="showcaseBtn"><div>Showcase Mode</div><small>Hide controls for full ambience</small></button>
+        <button class="action-btn active" id="motionBtn"><div>Motion On</div><small>Switch off if the browser slows</small></button>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="feature">
+      <div class="kicker">Luxury ambient display</div>
+      <h3 id="featureTitle">Subtle movement.</h3>
+      <p id="featureText">These themes are designed to feel more like an elegant digital interior — layered light, smooth colour drift and a more premium mood.</p>
+    </div>
+  </div>
+</div>
+<div class="bottom-bar" id="bottomBar">
+  <div class="apps-panel">
+    <div class="section-title">Your Entertainment</div>
+    <div class="desc">Use the matching button on your Hisense remote for the fastest access.</div>
+    <div class="apps">
+      <div class="app-card netflix"><strong>NETFLIX</strong><span>Netflix button</span></div>
+      <div class="app-card youtube"><strong>YouTube</strong><span>YouTube button</span></div>
+      <div class="app-card prime"><strong>prime video</strong><span>Prime Video button</span></div>
+      <div class="app-card disney"><strong>Disney+</strong><span>Disney+ button</span></div>
+      <div class="app-card live"><strong>Live TV</strong><span>Freeview / TV</span></div>
+      <div class="app-card guide"><strong>TV Guide</strong><span>Guide button</span></div>
+    </div>
+  </div>
+  <div class="showcase-card">
+    <button id="showcaseBtn2">Enter Showcase</button>
+    <p>Ideal when you want the screen to feel more like an ambient smart-home feature wall.</p>
+  </div>
+</div>
+<script>
+const MODES = {
+  sapphire:{num:'01', name:'Sapphire Drift', headline:'An ambient <em>escape.</em>', strap:'A calmer, more sophisticated display — rich colour, gentle motion and a smart-home atmosphere.', featureTitle:'Subtle movement.', featureText:'These themes are designed to feel more like an elegant digital interior — layered light, smooth colour drift and a more premium mood.', colors:['#050d17','#0b2437','#175b86','#88d8ff','#dff8ff']},
+  ember:{num:'02', name:'Ember Aura', headline:'A warm <em>evening glow.</em>', strap:'Bronze, copper and amber tones for a more cocooning, refined night-time atmosphere.', featureTitle:'Evening comfort.', featureText:'Warmer than the other themes, but kept abstract and elegant rather than literal or playful.', colors:['#10090c','#281018','#64311d','#b36a34','#ffd39a']},
+  noir:{num:'03', name:'Noir Gold', headline:'Private cinema, <em>refined.</em>', strap:'Dark velvet tones, soft gold highlights and a boutique, high-end finish.', featureTitle:'Boutique atmosphere.', featureText:'The most premium-feeling theme: dramatic enough to feel special, restrained enough to remain relaxing.', colors:['#08070d','#151225','#2d2447','#7667a6','#f0d3a0']},
+  aurora:{num:'04', name:'Aurora Glass', headline:'Colour with <em>restraint.</em>', strap:'Teal, violet and silver light drifting through a darker, more architectural composition.', featureTitle:'Modern glow.', featureText:'A slightly brighter statement theme, still built around smoother colour movement and a luxury smart-home feel.', colors:['#061017','#0d2a32','#17676f','#7f62cf','#cbf1ff']}
+};
+let current='sapphire', motion=true, showcase=false;
+const canvas=document.getElementById('scene');
+const ctx=canvas.getContext('2d');
+let w=0,h=0,dpr=Math.min(window.devicePixelRatio||1,1.5), particles=[];
+function rand(a,b){return a+Math.random()*(b-a)}
+function hexToRgba(hex,a){const s=hex.replace('#',''); const n=parseInt(s,16); return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+function resize(){w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0); seedParticles(); render(0);} 
+addEventListener('resize', resize);
+function seedParticles(){particles=[]; for(let i=0;i<34;i++){particles.push({x:rand(0,w),y:rand(0,h),r:rand(24,90),vx:rand(-.03,.03),vy:rand(-.02,.02),o:rand(.02,.08)});} }
+function updateClock(){const n=new Date(); const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']; const months=['January','February','March','April','May','June','July','August','September','October','November','December']; document.getElementById('time').textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; document.getElementById('date').textContent=`${days[n.getDay()]} ${n.getDate()} ${months[n.getMonth()]}`;}
+setInterval(updateClock,1000); updateClock();
+function paintBackground(t){
+  const c=MODES[current].colors;
+  ctx.clearRect(0,0,w,h);
+  const g = ctx.createLinearGradient(0,0,w,h);
+  g.addColorStop(0,c[0]); g.addColorStop(.32,c[1]); g.addColorStop(.68,c[2]); g.addColorStop(1,c[1]);
+  ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+
+  const drift = motion ? Math.sin(t/4500)*0.06 : 0;
+  const rg1 = ctx.createRadialGradient(w*(0.72+drift), h*0.28, 20, w*(0.72+drift), h*0.28, Math.max(w,h)*0.52);
+  rg1.addColorStop(0, hexToRgba(c[4], .40)); rg1.addColorStop(.28, hexToRgba(c[3], .20)); rg1.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=rg1; ctx.fillRect(0,0,w,h);
+
+  const rg2 = ctx.createRadialGradient(w*(0.76-drift*.7), h*0.72, 20, w*(0.76-drift*.7), h*0.72, Math.max(w,h)*0.46);
+  rg2.addColorStop(0, hexToRgba(c[3], .28)); rg2.addColorStop(.35, hexToRgba(c[2], .10)); rg2.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=rg2; ctx.fillRect(0,0,w,h);
+
+  drawSilkWaves(t,c);
+  drawParticles();
+}
+function drawSilkWaves(t,c){
+  for(let i=0;i<4;i++){
+    ctx.beginPath();
+    ctx.lineWidth = 90 - i*14;
+    ctx.strokeStyle = hexToRgba(i%2===0 ? c[4] : c[3], 0.05 + i*0.02);
+    const off = i*130;
+    ctx.moveTo(-120, h*(0.22 + i*0.15));
+    for(let x=-120; x<=w+140; x+=50){
+      const y = h*(0.28 + i*0.13) + Math.sin((x/210) + (t/2500) + i*1.2)*24 + Math.cos((x/420) + (t/3400) + i*0.6)*18;
+      ctx.lineTo(x+off*0.02, y);
+    }
+    ctx.stroke();
+  }
+}
+function drawParticles(){
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.fillStyle=`rgba(255,255,255,${p.o})`;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    if(motion){ p.x += p.vx; p.y += p.vy; if(p.x < -120) p.x = w+120; if(p.x > w+120) p.x = -120; if(p.y < -120) p.y = h+120; if(p.y > h+120) p.y = -120; }
+  });
+}
+function render(t){ paintBackground(t||0); }
+function animate(t){ render(t); if(motion) requestAnimationFrame(animate); }
+function applyMode(mode){ current=mode; const d=MODES[mode]; document.getElementById('eyebrow').textContent=`${d.num} / ${d.name}`; document.getElementById('headline').innerHTML=d.headline; document.getElementById('strap').textContent=d.strap; document.getElementById('featureTitle').textContent=d.featureTitle; document.getElementById('featureText').textContent=d.featureText; document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode)); seedParticles(); motion ? requestAnimationFrame(animate) : render(0); }
+document.querySelectorAll('.mode-btn').forEach(btn=>btn.addEventListener('click', ()=>applyMode(btn.dataset.mode)));
+function setMotion(on){ motion=on; const btn=document.getElementById('motionBtn'); btn.classList.toggle('active',on); btn.querySelector('div').textContent = on ? 'Motion On' : 'Motion Off'; seedParticles(); on ? requestAnimationFrame(animate) : render(0); }
+document.getElementById('motionBtn').addEventListener('click', ()=>setMotion(!motion));
+function setShowcase(on){ showcase=on; document.body.classList.toggle('showcase',on); document.getElementById('showcaseBtn').classList.toggle('active',on); document.getElementById('showcaseBtn2').textContent = on ? 'Exit Showcase' : 'Enter Showcase'; }
+document.getElementById('showcaseBtn').addEventListener('click', ()=>setShowcase(!showcase));
+document.getElementById('showcaseBtn2').addEventListener('click', ()=>setShowcase(!showcase));
+document.getElementById('exitShowcase').addEventListener('click', ()=>setShowcase(false));
+
+// Weather for Pontypool approx.
+const LAT = 51.702, LON = -3.045;
+const weatherCodes = {0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Rime fog',51:'Light drizzle',53:'Drizzle',55:'Dense drizzle',56:'Freezing drizzle',57:'Freezing drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',66:'Freezing rain',67:'Freezing rain',71:'Light snow',73:'Snow',75:'Heavy snow',77:'Snow grains',80:'Rain showers',81:'Rain showers',82:'Heavy showers',85:'Snow showers',86:'Snow showers',95:'Thunderstorm',96:'Thunderstorm',99:'Thunderstorm'};
+async function loadWeather(){
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+  try{
+    const res = await fetch(url,{cache:'no-store'});
+    if(!res.ok) throw new Error('Weather fetch failed');
+    const data = await res.json();
+    const temp = Math.round(data.current.temperature_2m);
+    const feels = Math.round(data.current.apparent_temperature);
+    const hi = Math.round(data.daily.temperature_2m_max[0]);
+    const lo = Math.round(data.daily.temperature_2m_min[0]);
+    const cond = weatherCodes[data.current.weather_code] || 'Current conditions';
+    document.getElementById('weatherTemp').textContent = `${temp}°C`;
+    document.getElementById('weatherCond').textContent = cond;
+    document.getElementById('weatherRange').textContent = `High ${hi}° / Low ${lo}° · Feels like ${feels}°`;
+  }catch(err){
+    document.getElementById('weatherTemp').textContent='--°C';
+    document.getElementById('weatherCond').textContent='Weather unavailable';
+    document.getElementById('weatherRange').textContent='Check connection to update live data';
+  }
+}
+setInterval(loadWeather, 15*60*1000);
+
+resize();
+applyMode('sapphire');
+setMotion(true);
+loadWeather();
+</script>
+</body>
+</html>
