@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hern Family Cinema Room 1 | Ambilight Luxury</title>
+<style>
+:root{
+  --bg:#07111b; --panel:rgba(7,13,20,.50); --panel-strong:rgba(6,10,16,.68); --line:rgba(255,224,180,.25);
+  --text:#f6f3ec; --muted:rgba(246,243,236,.76); --accent:#f2d3a0; --accent2:#5cd4ff; --chip:rgba(255,255,255,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#02070d;color:var(--text);font-family:Inter,Segoe UI,system-ui,-apple-system,sans-serif;overflow:hidden}
+body.showcase .overlay{opacity:0;transform:translateY(20px);pointer-events:none}
+body.showcase .hintbar{opacity:0;pointer-events:none}
+body.showcase .showcase-pill{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.18)}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;background:#05101a}
+.vignette,.glow,.grain{position:fixed;inset:0;pointer-events:none}
+.vignette{background:linear-gradient(90deg,rgba(2,5,12,.72),rgba(2,5,12,.16) 39%,rgba(2,5,12,0) 68%)}
+.glow{mix-blend-mode:screen;opacity:.72;background:radial-gradient(55rem 28rem at 74% 36%, rgba(94,224,255,.22), transparent 60%),radial-gradient(46rem 24rem at 72% 66%, rgba(255,170,70,.12), transparent 62%)}
+.grain{opacity:.065;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" stitchTiles="stitch"/></filter><rect width="140" height="140" filter="url(%23n)" opacity="1"/></svg>')}
+.shell{position:relative;height:100%;display:flex;align-items:stretch;justify-content:space-between;padding:2.1vw 2.1vw 13.6vw 2.1vw}
+.overlay{width:min(38.5vw,760px);display:flex;flex-direction:column;gap:.85vw;transition:all .35s ease}
+.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.brand h1{margin:0;color:var(--accent);font-size:2.2vw;letter-spacing:.32vw;font-weight:700}
+.brand .sub{margin-top:.25vw;font-size:1.08vw;letter-spacing:.23vw;color:var(--muted);text-transform:uppercase}
+.clock{padding-top:.1vw;text-align:right}
+.clock .time{font-size:3.2vw;font-weight:300;letter-spacing:.06vw}
+.clock .date{font-size:1.1vw;color:var(--muted)}
+.hero{margin-top:2.2vw}
+.eyebrow{font-size:1vw;letter-spacing:.32vw;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h2{margin:.45vw 0 0 0;font-family:Georgia,'Times New Roman',serif;font-size:4.85vw;line-height:.92;max-width:10ch;font-weight:600}
+.hero h2 em{font-style:italic;color:var(--accent)}
+.hero p{margin:1vw 0 0 0;max-width:28ch;font-size:1.42vw;line-height:1.34;color:var(--muted)}
+.panel{margin-top:auto;background:linear-gradient(180deg, rgba(8,14,22,.42), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:1.15vw;box-shadow:0 1.4vw 3vw rgba(0,0,0,.28)}
+.section-title{font-size:1vw;letter-spacing:.32vw;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:.62vw}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:.62vw}
+.mode-btn,.control-btn,.app{border-radius:1.25vw;border:1px solid rgba(255,255,255,.14);background:var(--chip);color:#fff;text-decoration:none}
+.mode-btn,.control-btn{padding:.92vw 1vw;display:flex;justify-content:space-between;align-items:center;gap:.8rem;font-size:1.12vw;cursor:pointer}
+.mode-btn small,.control-btn small{display:block;color:rgba(255,255,255,.55);font-size:.74vw;letter-spacing:.05vw}
+.mode-btn.active,.control-btn.active{border-color:rgba(255,226,179,.82);box-shadow:0 0 0 .16vw rgba(255,218,160,.18), inset 0 0 0 .1vw rgba(255,216,154,.22)}
+.control-row{display:grid;grid-template-columns:1fr 1fr;gap:.62vw;margin-top:.62vw}
+.rightside{width:min(35vw,680px);display:flex;align-items:flex-end;justify-content:flex-end}
+.feature-card{width:100%;max-width:33vw;align-self:center;padding:1.65vw;border-radius:1.8vw;background:linear-gradient(180deg, rgba(8,15,22,.10), rgba(8,15,22,.24));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(4px)}
+.feature-card .kicker{font-size:1vw;letter-spacing:.28vw;text-transform:uppercase;color:rgba(255,255,255,.76)}
+.feature-card h3{margin:.55vw 0 .45vw;font-size:2.9vw;line-height:1;font-weight:400;font-family:Georgia,serif}
+.feature-card p{margin:0;color:rgba(255,255,255,.75);font-size:1.2vw;line-height:1.45;max-width:28ch}
+.hintbar{position:fixed;left:2.1vw;right:2.1vw;bottom:1.35vw;display:flex;align-items:flex-end;justify-content:space-between;gap:1vw;transition:opacity .25s ease}
+.apps-wrap{flex:1;min-width:0;background:linear-gradient(180deg, rgba(8,14,22,.42), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:.92vw 1vw}
+.apps{display:grid;grid-template-columns:repeat(6,1fr);gap:.58vw;margin-top:.62vw}
+.app{padding:.82vw .68vw;min-height:5.8vw;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));box-shadow:inset 0 .05vw 0 rgba(255,255,255,.07)}
+.app strong{font-size:1.18vw}
+.app span{margin-top:.28vw;color:rgba(255,255,255,.58);font-size:.74vw}
+.app.netflix strong{color:#ff5c57}.app.youtube strong{color:#fff}.app.prime strong{color:#bfe9ff}.app.disney strong{color:#dae3ff}.app.freely strong{color:#ff7f9f}.app.tv strong{color:#efe1b0}
+.showcase-box{width:13.5vw;background:linear-gradient(180deg, rgba(8,14,22,.42), rgba(8,14,22,.72));backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:1.7vw;padding:.92vw}
+.showcase-pill{width:100%;padding:.92vw 1vw;border-radius:1.2vw;border:1px solid rgba(255,255,255,.18);background:rgba(255,229,186,.14);color:#ffe2b6;font-size:1vw;text-align:left;cursor:pointer}
+.showcase-box p{margin:.62vw 0 0;font-size:.8vw;line-height:1.32;color:rgba(255,255,255,.62)}
+.mini{position:fixed;left:2vw;top:1.6vw;font-size:.95vw;letter-spacing:.16vw;color:rgba(255,255,255,.64);opacity:0;transition:opacity .25s ease;text-transform:uppercase;pointer-events:none}
+body.showcase .mini{opacity:1}
+button{font:inherit}
+@media (max-aspect-ratio: 14/9){ .rightside{display:none}.overlay{width:min(51vw,760px)} .apps{grid-template-columns:repeat(3,1fr)} .showcase-box{display:none} .hintbar{right:auto;width:calc(100% - 4.2vw)} }
+
+.weather-card{position:absolute;top:2.1vw;right:2.1vw;width:17.1vw;padding:.92vw 1.05vw;border-radius:1.2vw;background:linear-gradient(125deg,rgba(7,22,32,.68),rgba(13,42,53,.46));border:1px solid rgba(235,215,182,.27);box-shadow:0 10px 35px rgba(0,0,0,.14);backdrop-filter:blur(5px);transition:opacity .35s ease;z-index:2}
+.weather-top{display:flex;justify-content:space-between;align-items:center;color:#f2d3a0;font-size:.74vw;letter-spacing:.12vw;text-transform:uppercase}
+.weather-main{display:flex;align-items:center;justify-content:space-between;margin:.38vw 0 .22vw}
+.weather-temp{font-size:2.75vw;font-weight:300;line-height:1}
+.weather-symbol{font-size:1.95vw;color:#f2d3a0}
+.weather-desc{font-size:.92vw;color:#f6f3ec}
+.weather-detail{font-size:.76vw;line-height:1.4;color:rgba(246,243,236,.7);margin-top:.28vw}
+.weather-credit{font-size:.6vw;color:rgba(246,243,236,.45);margin-top:.36vw}
+body.showcase .weather-card{opacity:0;pointer-events:none}
+.exit-showcase{display:none;position:fixed;bottom:2vw;right:2vw;z-index:10;padding:1vw 1.5vw;font-size:1.15vw;border-radius:1.2vw;background:rgba(7,15,22,.75);border:1px solid rgba(255,229,183,.55);color:#f2d3a0;cursor:pointer}
+body.showcase .exit-showcase{display:block}
+@media(max-aspect-ratio:14/9){.weather-card{width:24vw}.weather-top{font-size:1vw}.weather-temp{font-size:4vw}.weather-desc{font-size:1.35vw}.weather-detail{font-size:1.1vw}}
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div class="vignette"></div><div class="glow"></div><div class="grain"></div>
+<div class="mini">Hern Family Cinema Room 1 · Showcase</div>
+<div class="shell">
+  <div class="overlay">
+    <div class="topline">
+      <div class="brand">
+        <h1>HERN FAMILY</h1>
+        <div class="sub">Cinema Room 1 · Ambilight Edition</div>
+      </div>
+      <div class="clock"><div class="time" id="time">14:27</div><div class="date" id="date">Wednesday 21 October</div></div>
+    </div>
+    <div class="hero">
+      <div class="eyebrow" id="eyebrow">01 / Aurora Spectrum</div>
+      <h2 id="headline">Colour that <em>fills the room.</em></h2>
+      <p id="strap">Sophisticated waves of colour designed to make Ambilight part of the experience.</p>
+    </div>
+    <div class="panel">
+      <div class="section-title">Ambilight Colour Themes</div>
+      <div class="mode-grid">
+        <button class="mode-btn active" data-mode="aurora"><div><div>Aurora Spectrum</div><small>Violet / teal / Ambilight</small></div><div>01</div></button>
+        <button class="mode-btn" data-mode="sapphire"><div><div>Sapphire Immersion</div><small>Deep blue / silver glow</small></div><div>02</div></button>
+        <button class="mode-btn" data-mode="molten"><div><div>Molten Gold</div><small>Amber / copper / bronze</small></div><div>03</div></button>
+        <button class="mode-btn" data-mode="noir"><div><div>Cinema Noir</div><small>Midnight / champagne gold</small></div><div>04</div></button>
+      </div>
+      <div class="control-row">
+        <button class="control-btn" id="showcaseBtn"><div><div>Showcase Mode</div><small>Hide controls for full ambience</small></div><div>⤢</div></button>
+        <button class="control-btn active" id="motionBtn"><div><div>Motion On</div><small>Switch off if browser slows down</small></div><div>◐</div></button>
+      </div>
+    </div>
+  </div>
+<div class="weather-card overlay" aria-label="Pontypool weather">
+  <div class="weather-top"><span>Pontypool</span><span>Outside</span></div>
+  <div class="weather-main"><span class="weather-temp" id="weather-temp">--°C</span><span class="weather-symbol" id="weather-symbol">◌</span></div>
+  <div class="weather-desc" id="weather-desc">Loading weather…</div>
+  <div class="weather-detail" id="weather-detail">Local conditions and forecast</div>
+  <div class="weather-credit">Weather data: Open-Meteo</div>
+</div>
+  <div class="rightside">
+    <div class="feature-card">
+      <div class="kicker">Designed for picture-reactive Ambilight</div>
+      <h3 id="featureTitle">Light beyond the screen.</h3>
+      <p id="featureText">Slow ribbons of teal, violet and champagne light carry colour right to the edges of your Philips screen.</p>
+    </div>
+  </div>
+</div>
+<button class="exit-showcase" id="exitShowcase">Exit Showcase</button>
+<div class="hintbar">
+  <div class="apps-wrap">
+    <div class="section-title" style="margin-bottom:0">Your Entertainment</div>
+    <div style="color:rgba(255,255,255,.70);font-size:.9vw;margin-top:.22vw">Use the dedicated buttons on your Philips remote for the fastest access.</div>
+    <div class="apps">
+      <div class="app netflix"><strong>NETFLIX</strong><span>Netflix button</span></div>
+      <div class="app prime"><strong>prime video</strong><span>Prime Video button</span></div>
+      <div class="app disney"><strong>Disney+</strong><span>Disney+ button</span></div>
+      <div class="app youtube"><strong>YouTube</strong><span>YouTube button</span></div>
+      <div class="app freely"><strong>Freely</strong><span>Freely button</span></div>
+      <div class="app tv"><strong>TV Channels</strong><span>TV Channels button</span></div>
+    </div>
+  </div>
+  <div class="showcase-box">
+    <button class="showcase-pill" id="showcaseBtn2">Enter Showcase</button>
+    <p>Press OK with the cursor over this button to hide the interface and let the scene fill the room.</p>
+  </div>
+</div>
+<script>
+const MODES={
+ aurora:{num:'01',name:'Aurora Spectrum',headline:'Colour that <em>fills the room.</em>',strap:'Sophisticated waves of colour designed to make Ambilight part of the experience.',featureTitle:'Light beyond the screen.',featureText:'Slow ribbons of teal, violet and champagne light carry colour right to the edges of your Philips screen.',colors:['#051423','#0f3045','#1bc2c0','#7556b8','#df8abf']},
+ sapphire:{num:'02',name:'Sapphire Immersion',headline:'Immerse in <em>the blue.</em>',strap:'Deep cobalt, cool silver and turquoise illumination. Quietly dramatic, beautifully composed.',featureTitle:'Sapphire glow.',featureText:'A refined oceanic palette designed to extend cool tones into the surrounding Ambilight.',colors:['#041626','#0c3458','#1179bd','#55c9ea','#c2efff']},
+ molten:{num:'03',name:'Molten Gold',headline:'The art of <em>warmth.</em>',strap:'Soft bronze and amber light, moving like reflections through polished glass.',featureTitle:'Warm reflections.',featureText:'Copper and honey tones for a softer, richer evening atmosphere around the television.',colors:['#190e12','#51251c','#a45c33','#e6ab62','#ffe0a5']},
+ noir:{num:'04',name:'Cinema Noir',headline:'Cinema with <em>character.</em>',strap:'Midnight purple, charcoal and quiet champagne highlights — dramatic without distraction.',featureTitle:'Midnight luxury.',featureText:'A darker, more restrained theme when you want ambience without washing the room in colour.',colors:['#0b0a15','#22182e','#514077','#967cad','#eed7a5']}
+};
+let current='aurora', motion=true, showcase=false, raf=0, last=0;
+const canvas=document.getElementById('scene'), ctx=canvas.getContext('2d');
+let w=0,h=0,dpr=1;
+function rgba(hex,alpha){const n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+alpha+')'}
+function resize(){w=innerWidth;h=innerHeight; dpr=Math.min(window.devicePixelRatio||1,1.15);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);paint(performance.now());}
+addEventListener('resize',resize);
+function paint(t){
+ const c=MODES[current].colors, sec=motion?t/1000:0;
+ ctx.clearRect(0,0,w,h);
+ const base=ctx.createLinearGradient(0,0,w,h);base.addColorStop(0,c[0]);base.addColorStop(.37,c[1]);base.addColorStop(.68,c[2]);base.addColorStop(1,c[3]);ctx.fillStyle=base;ctx.fillRect(0,0,w,h);
+ // Broad light fields extend to the screen edges so Ambilight can respond.
+ for(let i=0;i<5;i++){
+   const x=w*(.42+.15*Math.sin(sec*.095+i*1.3)),y=h*(.47+.37*Math.cos(sec*.076+i*.91));
+   const rad=Math.max(w,h)*(.32+i*.035);
+   const g=ctx.createRadialGradient(x,y,0,x,y,rad);
+   g.addColorStop(0,rgba(c[(i+2)%5],.45));g.addColorStop(.50,rgba(c[(i+2)%5],.19));g.addColorStop(1,rgba(c[(i+2)%5],0));
+   ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+ }
+ // Very soft flowing silk bands: no cartoon particles, fish, flames or rapid flashes.
+ ctx.save();ctx.globalCompositeOperation='screen';
+ for(let j=0;j<5;j++){
+   ctx.beginPath();ctx.lineWidth=h*(.11+j*.018);ctx.strokeStyle=rgba(c[(j+2)%5],.08+j*.006);
+   for(let x=-40;x<=w+45;x+=32){
+    const y=h*(.12+j*.19)+Math.sin(x/w*5+sec*.085+j*1.4)*h*.075 +Math.cos(x/w*2.6-sec*.07+j)*h*.038;
+    if(x===-40)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+   }ctx.stroke();
+ }ctx.restore();
+}
+function animate(t){if(!motion){raf=0;return}if(t-last>=42){paint(t);last=t}raf=requestAnimationFrame(animate)}
+function restart(){if(raf)cancelAnimationFrame(raf);raf=0;paint(performance.now());if(motion)raf=requestAnimationFrame(animate)}
+function updateClock(){const n=new Date(),days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],months=['January','February','March','April','May','June','July','August','September','October','November','December'];document.getElementById('time').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');document.getElementById('date').textContent=days[n.getDay()]+' '+n.getDate()+' '+months[n.getMonth()]}
+setInterval(updateClock,15000);updateClock();
+function applyMode(m){current=m;const d=MODES[m];document.getElementById('eyebrow').textContent=d.num+' / '+d.name;document.getElementById('headline').innerHTML=d.headline;document.getElementById('strap').textContent=d.strap;document.getElementById('featureTitle').textContent=d.featureTitle;document.getElementById('featureText').textContent=d.featureText;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));restart()}
+document.querySelectorAll('.mode-btn').forEach(b=>b.onclick=()=>applyMode(b.dataset.mode));
+function setMotion(on){motion=on;const b=document.getElementById('motionBtn');b.classList.toggle('active',on);b.querySelector('div div').textContent=on?'Motion On':'Motion Off';restart()}
+document.getElementById('motionBtn').onclick=()=>setMotion(!motion);
+function setShowcase(on){showcase=on;document.body.classList.toggle('showcase',on);document.getElementById('showcaseBtn2').textContent=on?'Exit Showcase':'Enter Showcase'}
+document.getElementById('showcaseBtn').onclick=()=>setShowcase(!showcase);
+document.getElementById('showcaseBtn2').onclick=()=>setShowcase(!showcase);
+document.getElementById('exitShowcase').onclick=()=>setShowcase(false);
+function weatherDescription(code){if(code===0)return ['Clear sky','☀']; if(code<=3)return ['Partly cloudy','☁'];if(code===45||code===48)return ['Fog','≋']; if(code>=51&&code<=57)return ['Drizzle','☂'];if(code>=61&&code<=67)return ['Rain','☂'];if(code>=71&&code<=77)return ['Snow','❄'];if(code>=80&&code<=82)return ['Showers','☂'];if(code>=95)return ['Thunderstorms','ϟ'];return ['Mixed conditions','☁'];}
+function weatherUnavailable(){document.getElementById('weather-temp').textContent='--°C';document.getElementById('weather-symbol').textContent='◌';document.getElementById('weather-desc').textContent='Weather unavailable';document.getElementById('weather-detail').textContent='Check the TV internet connection';}
+function fetchWeather(){
+ const url='https://api.open-meteo.com/v1/forecast?latitude=51.703&longitude=-3.045&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FLondon&forecast_days=1';
+ const request=new XMLHttpRequest(); request.open('GET',url,true); request.timeout=10000;
+ request.onreadystatechange=function(){if(request.readyState!==4)return; if(request.status===200){try{const data=JSON.parse(request.responseText), c=data.current, d=data.daily;if(!c||typeof c.temperature_2m!=='number')throw new Error('No temperature');const desc=weatherDescription(c.weather_code);document.getElementById('weather-temp').textContent=Math.round(c.temperature_2m)+'°C';document.getElementById('weather-symbol').textContent=desc[1];document.getElementById('weather-desc').textContent=desc[0];const parts=[];if(typeof c.apparent_temperature==='number')parts.push('Feels '+Math.round(c.apparent_temperature)+'°');if(d&&d.temperature_2m_max&&d.temperature_2m_min)parts.push('High '+Math.round(d.temperature_2m_max[0])+'° / Low '+Math.round(d.temperature_2m_min[0])+'°');document.getElementById('weather-detail').textContent=parts.join(' · ');return;}catch(e){}}weatherUnavailable();};
+ request.onerror=weatherUnavailable;request.ontimeout=weatherUnavailable;try{request.send();}catch(e){weatherUnavailable();}
+}
+fetchWeather();setInterval(fetchWeather,900000);
+resize();applyMode('aurora');
+</script>
+</body>
+</html>
